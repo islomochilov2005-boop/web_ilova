@@ -1,0 +1,11 @@
+<html>
+<head>
+    <title>Barcha yangiliklar</title>
+</head>
+<body>
+    <div style="text-align: center; border: 2px solid red; margin: 0 auto; width: fit-content; padding: 0 10px;"><h2 >Barcha yangiliklaR</h2></div>
+    {% for new in news %}
+        <p style="font-weight: bold;"><a href="{% url 'detail' new.id %}">{{ new.title }}</a></p>
+    {% endfor %}
+</body>
+</html>

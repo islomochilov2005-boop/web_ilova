@@ -1,0 +1,24 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+
+{% block title %} DETAIL {% endblock title %}
+{% block content %}
+
+<div style="margin: 30px;">
+    <h2>BATAFSIL MA`LUMOTLAR</h2>
+    <h3 style="font-weight: bold; text-align: left; margin: 0">{{ new.title }}</h3>
+    <br>
+    <p style="text-align: left;">{{ new.body }}</p>
+    {% if new.image %}
+    <img style="margin-bottom: 100px;" src="{{ new.image.url }}" alt="Buyerda rasm turibdi">
+    {% endif %}
+    {% if new.video %}
+    <video controls width="100%">
+        <source src="{{ new.video.url }}" type="video/mp4">
+    </video>
+    {% else %}
+    <img src="{% static 'images/logo.jpg' %}" alt="">
+    {% endif %}
+</div>
+{% endblock content %}
