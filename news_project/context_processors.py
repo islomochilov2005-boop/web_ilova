@@ -5,4 +5,4 @@ def all_Categories(request):
     context = {
         'categories': categories
     }
-    return context
+    return context  

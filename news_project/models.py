@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -27,7 +28,7 @@ class News(models.Model):
     published_at = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(choices=Status.choices, default=Status.Published)
+    status = models.CharField(choices=Status.choices, default=Status.Draft)
 
     class Meta:
         ordering = ["-published_at"]
@@ -36,6 +37,9 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('detail', args=[self.slug])
 
 
 class Contact(models.Model):

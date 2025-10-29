@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import News, Category
 from .forms import ContactForm
 from django.http import HttpResponse
+from django.views.generic import UpdateView
 
 
 def all_news(request):
@@ -12,8 +13,8 @@ def all_news(request):
     return render(request, 'news/all_news.html', context)
 
 
-def detail(request, pk):
-    new = News.objects.get(id=pk)
+def detail(request, news):
+    new = News.objects.get(slug=news)
     context = {
         'new': new
     }
@@ -26,7 +27,7 @@ def home_page_view(request):
     last_news = News.objects.order_by('-published_at')[:6]
 
     uzb_news_last = News.objects.select_related("category").filter(status=News.Status.Published,category__name__iexact="O'zbekiston").order_by("-published_at")[0]
-    uzb_news = News.objects.select_related("category").filter(status=News.Status.Published,category__name__iexact="O‘zbekiston").order_by("-published_at")[1:5]
+    uzb_news = News.objects.select_related("category").filter(status=News.Status.Published,category__name__iexact="O'zbekiston").order_by("-published_at")[1:5]
     jahon_yangiliklari = News.objects.select_related("category").filter(status=News.Status.Published,category__name__iexact="jahon").order_by("-published_at")[0]
     jahon_yangiliklar = News.objects.select_related("category").filter(status=News.Status.Published,category__name__iexact="jahon").order_by("-published_at")[1:5]
 
@@ -43,6 +44,11 @@ def home_page_view(request):
             new_video = i
             break
 
+    moliya_news = News.objects.select_related("category").filter(status=News.Status.Published,
+                                                                 category__name__iexact="moliya").order_by(
+        "-published_at")[1:5]
+    images = News.objects.order_by('-published_at')[:6]
+
     context = {
         'categories': categories,
         'news': news,
@@ -55,7 +61,9 @@ def home_page_view(request):
         'iqtisod_news': iqtisod_news,
         'sport_last': sport_last,
         'sport_last_news': sport_last_news,
-        'new_video': new_video
+        'new_video': new_video,
+        'moliya_news': moliya_news,
+        'images': images
     }
     return render(request, 'news/index.html', context)
 
@@ -87,8 +95,7 @@ def for_base_html(request):
 
 
 def category_news(request, ct_name):
-    ct_news = News.objects.select_related("category").filter(status=News.Status.Published,
-                                                             category__name__iexact=ct_name.lower()).order_by(
+    ct_news = News.objects.select_related("category").filter(status=News.Status.Published,category__name__iexact=ct_name.lower()).order_by(
         "-published_at")
     context = {
         'ct_news': ct_news,
@@ -97,6 +104,6 @@ def category_news(request, ct_name):
     return render(request, 'news/category_news.html', context)
 
 
-
-
-
+class EditView(UpdateView):
+    model = News
+    template_name = 'news/edit_news.html'

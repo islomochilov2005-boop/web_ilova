@@ -6,7 +6,7 @@
 <div style="margin: 30px;" >
     <center><h1>{{ ct_name }} yangiliklari</h1></center>
     {% for ct_new in ct_news %}
-    <a href="{% url 'detail' ct_new.id %}"> <h3>{{ ct_new.title }}</h3> </a>
+    <a href="{{ ct_new.get_absolute_url }}"> <h3>{{ ct_new.title }}</h3> </a>
     <br>
     {% endfor %}
 </div>
