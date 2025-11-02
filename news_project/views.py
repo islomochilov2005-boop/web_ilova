@@ -2,7 +2,8 @@ from django.shortcuts import render
 from .models import News, Category
 from .forms import ContactForm
 from django.http import HttpResponse
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView,DeleteView,CreateView
+from django.urls import reverse_lazy
 
 
 def all_news(request):
@@ -106,4 +107,21 @@ def category_news(request, ct_name):
 
 class EditView(UpdateView):
     model = News
-    template_name = 'news/edit_news.html'
+    template_name = 'crud/edit_news.html'
+    fields = ['title','body','image','video','category','status']
+    context_object_name = 'simple'
+
+
+class RemoveView(DeleteView):
+    model = News
+    template_name = 'crud/delete.html'
+    success_url =reverse_lazy('home_page')
+    context_object_name = 'salom'
+
+
+
+class CreateNewsView(CreateView):
+    model = News
+    template_name = 'crud/create.html'
+    fields = ['title','slug','body','image','video','category','status']
+    context_object_name = 'alik'

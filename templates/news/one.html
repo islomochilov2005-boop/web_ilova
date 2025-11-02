@@ -17,8 +17,13 @@
     <video controls width="100%">
         <source src="{{ new.video.url }}" type="video/mp4">
     </video>
-    {% else %}
-    <img src="{% static 'images/logo.jpg' %}" alt="">
+
     {% endif %}
+
+    <div>
+        <a style="border: 1px solid black;padding: 10px 15px;background-color: red;color white;border:none;" href="{% url 'delete' new.slug %}">O"CHIRMOQ</a>
+        <a style="border: 1px solid black;padding: 10px 15px;background-color: yellow;color white;border:none;" href="{% url 'edit' new.slug %}">O'ZGARTIRISH</a>
+    </div>
+
 </div>
 {% endblock content %}

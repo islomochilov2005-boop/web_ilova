@@ -1,0 +1,16 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h2>O'chirish</h2>
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        <h3>Rostdan ham ushbu habarni o'chirmoqchimisiz <br> {{salom.title}} </h3>
+
+        <button style="margin-buttom: 30px; background-color: red; colar: white " type="submit">O"chirmoq</button>
+
+
+
+    </form>
+{% endblock content %}
